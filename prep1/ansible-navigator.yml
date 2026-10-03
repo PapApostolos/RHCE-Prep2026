@@ -1,0 +1,19 @@
+---
+ansible-navigator:
+
+  logging:
+    level: critical
+    append: False
+    file: $PWD/logs/ansible-navigator.log
+
+  playbook-artifact:
+    enable: False
+
+  execution-environment:
+    enabled: true
+    image: registry.redhat.io/ansible-automation-platform-27/ee-supported-rhel9
+    pull:
+      policy: missing
+
+...
+

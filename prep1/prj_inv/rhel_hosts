@@ -1,0 +1,12 @@
+[RHEL_SERVERS]
+rhel-server1 ansible_host=192.168.122.63
+rhel-server2 ansible_host=192.168.122.246
+rhel-server3 ansible_host=192.168.122.225
+
+[RHEL_SERVERS:vars]
+ansible_user=ans_user
+ansible_password=qweasd
+ansible_become=true
+ansible_become_method=sudo
+ansible_become_user=root
+ansible_become_password=qweasd
