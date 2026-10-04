@@ -1,0 +1,40 @@
+---
+- name: Manage RHEL Packages
+  hosts: rhel-server1,rhel-server3 # RHEL_SERVERS
+  tags: pkgs
+
+  gather_facts: true
+
+  vars:
+
+    tmp_info:
+      user: rhel-apap
+      group: wheel
+      destination: "/home/rhel-apap/RHCE/server_info.txt"
+
+    container_apps:
+      - java_container
+      - database_container
+
+  tasks:
+    - name: Debug Hostvars
+      ansible.builtin.debug:
+        msg: |
+          {{ inventory_hostname | upper }}
+          Groups: {{ groups['RHEL_SERVERS'] }}
+          Hostvars: {{ hostvars[inventory_hostname]['ansible_facts']['default_ipv4'] | to_nice_yaml }}
+
+    - name: Ensure Template on Remote rhel-server1
+      ansible.builtin.template:
+        backup: true
+
+        owner: "{{ tmp_info['user'] }}"
+        group: "{{ tmp_info['group'] }}"
+        dest: "{{ tmp_info ['destination'] }}"
+        # src: server_info.txt.j2
+        src: ../../templates/server_info.txt.j2
+        mode: "0744"
+
+
+
+...

@@ -1,0 +1,14 @@
+{# This is a test template #}
+# {{ ansible_managed }}
+# Server Configuration
+
+Server Information:
+    Address: {{ ansible_facts['default_ipv4']['address'] }}
+    Hostname: {{ ansible_facts['hostname'] }}
+
+Container Information:
+{% if container_apps is defined %}
+{% for container in container_apps %}
+    - {{ container }}
+{% endfor %}
+{% endif %}
