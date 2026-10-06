@@ -1,17 +1,17 @@
 ---
-- name: Ansible Vault playbook.yml
-  hosts: "{{ my_host | default('rhel-server1,rhel-server3') }}"
+- name: "Ping Inventory Hosts"
+  hosts: "{{ my_host | default('MIRROR-SERVERS') }}"
   gather_facts: false
 
   vars:
     user_state: "present"
 
   tasks:
-    - name: Lookup File
+    - name: Ping Remote Hosts
       ansible.builtin.debug:
         msg: "Ping {{ inventory_hostname }}"
 
-    - name: Ping Host
+    - name: Display Hosts
       ansible.builtin.ping:
 
 ...

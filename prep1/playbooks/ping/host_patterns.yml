@@ -1,0 +1,15 @@
+---
+- name: "Host Patterns"
+  hosts: "{{ my_host | default('all') }}"
+  order: "{{ my_order | default('inventory') }}"
+  gather_facts: false
+
+  vars:
+    user_state: "present"
+
+  tasks:
+
+    - name: Display Hosts
+      ansible.builtin.debug:
+        msg: "Inventory-host: {{ inventory_hostname }}"
+...
