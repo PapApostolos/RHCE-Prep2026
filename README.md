@@ -16,7 +16,7 @@
 
 ---
 
-### Run
+### Ansible Run
 * ansible-navigator
 * ansible-navigator -m stdout
 * ansible-navigator -m stdout --check
