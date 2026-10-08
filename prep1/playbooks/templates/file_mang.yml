@@ -1,0 +1,65 @@
+# File Management Playbook
+---
+- name: File Management Playbook
+  hosts: "{{ my_host | default('rhel-server1,rhel-server3')}}" # RHEL_SERVERS
+  tags: file-manag
+
+  gather_facts: false
+
+  vars:
+    ans_motd_path: "./files/motd"
+    ans_git_repo_path: "/home/apap/linux/"
+
+  tasks:
+
+    # --------------------------------------------
+    # Copy File: From Internal/Local Server
+    # --------------------------------------------
+
+    - name: "FILE_MANAGEMENT | Copy motd File at '{{ inventory_hostname }}'"
+      ansible.builtin.copy:
+        src: "{{ ans_motd_path }}"
+        dest: "/etc/motd"
+        backup: true
+        force: true
+
+
+    - name: "FILE_MANAGEMENT | Copy File Internally at '{{ inventory_hostname }}'"
+      ansible.builtin.copy:
+        src: "/etc/hosts"
+        dest: "{{ ans_git_repo_path }}"
+        remote_src: true
+        backup: true
+        force: true
+
+    # --------------------------------------------
+    # Insert context: Line or Block of Lines
+    # --------------------------------------------
+
+    - name: "FILE_MANAGEMENT | Modify motd file at '{{ inventory_hostname }}'"
+      ansible.builtin.lineinfile:
+        path: /etc/motd
+        regexp: '^# Welcome to'
+        line: "# Welcome to '{{ inventory_hostname | upper }}' Server"
+
+    - name: "FILE_MANAGEMENT | Insert Block of code"
+      ansible.builtin.blockinfile:
+        state: present
+        path: "/etc/motd"
+        marker_end: "End motd"
+        marker_begin: "Start motd"
+        marker: "# {mark} ansible managed block"
+        block: |
+          - This Server belongs to a local linux environemnt.
+          - Please Pay attention and use the system responsibly.
+
+    # --------------------------------------------
+    # Copy File: From Internal/Local Server
+    # --------------------------------------------
+
+    - name: "FILE_MANAGEMENT | Fetch File from '{{ inventory_hostname }}'"
+      ansible.builtin.fetch:
+        src: /etc/hosts
+        dest: "./collected_files"
+
+...
