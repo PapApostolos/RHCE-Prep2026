@@ -7,21 +7,28 @@
   gather_facts: false
 
   vars:
-    my_groups:
+    ans_groups:
       - devops
       - sysadmins
 
-    my_users:
-      natasha:
-        groups:
-          - wheel
-          - devops
+    ans_users:
+      - guest
+      - natasha
+      - sysadmin1
+
 
   tasks:
-    - name: Conditionals tasks
-      ansible.builtin.debug:
-        msg: >-
-          Hostname: {{ inventory_hostname }}, Host: {{ ansible_host }}
+    - name: Ensure desired group exists
+      loop: "{{ ans_groups }}"
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: present
 
+    - name: Ensure user exist
+      loop: "{{ ans_users }}"
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        password: "{{ ans_password | default('redhat') | password_hash('512') }}"
 
 ...
