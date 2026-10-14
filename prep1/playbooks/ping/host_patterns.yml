@@ -1,7 +1,13 @@
 ---
 - name: "Host Patterns"
-  hosts: "{{ my_host | default('all') }}"
-  order: "{{ my_order | default('inventory') }}"
+
+  # hosts: "{{ my_host | default('all:!rhel-server2') }}"
+  # hosts: "{{ ans_host | default('rhel-server*') }}"
+  hosts: "{{ my_host | default('RHEL-SERVERS,&MIRROR-SERVERS') }}"
+  # hosts: "{{ my_host | default('rhel-server3,rhel-server2') }}"
+
+  order: "{{ ans_order | default('inventory') }}"
+
   gather_facts: false
 
   vars:
@@ -9,7 +15,10 @@
 
   tasks:
 
-    - name: Display Hosts
+    - name: Display Connection Information
+      changed_when: false
       ansible.builtin.debug:
-        msg: "Inventory-host: {{ inventory_hostname }}"
+        msg: >
+          The {{ inventory_hostname }} has address {{ ansible_host }}
+
 ...

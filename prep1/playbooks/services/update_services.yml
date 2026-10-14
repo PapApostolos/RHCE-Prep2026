@@ -1,0 +1,38 @@
+# ./services/update_services.yml
+---
+- name: Update Services Playbook
+  hosts: "{{ ans_host | default('rhel-server1,rhel-server2') }}"
+  gather_facts: false
+
+  vars:
+
+    ans_service:
+      name: "httpd"
+      version: "2.4.63"
+
+
+  tasks:
+
+    - name: Block for Service Related tasks
+      block:
+
+        - name: "Ensure current version is captured for service: {{ ans_service.name }}"
+          changed_when: false
+          register: ans_service_version_old
+          failed_when: >
+            ans_service.version not in (ans_service_version_old.stdout | default(''))
+          ansible.builtin.command: "{{ ans_service.name }} -version"
+
+      rescue:
+
+        - debug:
+            msg: |
+              ans_service_version_old
+              ans_service_version_old
+
+        - name: Ensure Message is displaybd about current tasks
+          ansible.builtin.debug:
+            msg: |
+              Service: {{ ans_service['name'] }} seems not to be in version: '{{ ans_service['version'] }}'
+
+...

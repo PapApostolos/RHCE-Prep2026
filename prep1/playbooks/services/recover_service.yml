@@ -1,0 +1,29 @@
+# ./services/update_services.yml
+---
+- name: Update Services Playbook
+  hosts: "{{ ans_host | default('rhel-server1,rhel-server2') }}"
+  force_handlers: true
+  gather_facts: false
+
+  vars:
+
+    ans_services:
+      - crond
+      - httpd
+
+  tasks:
+
+    - name: Service Recovery in case of faillures
+      # ignore_errors: true
+      notify: Restart httpd
+      loop: "{{ ans_services }}"
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: restarted
+
+  handlers:
+    - name: Restart httpd
+      ansible.builtin.systemd_service:
+        name: "httpd"
+        state: restarted
+...

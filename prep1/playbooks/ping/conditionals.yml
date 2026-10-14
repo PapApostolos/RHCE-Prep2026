@@ -1,0 +1,27 @@
+# playbooks/ping/conditionals.yml
+---
+- name: Conditionals and Loops
+  hosts: "{{ ans_hosts | default('RHEL-SERVERS') }}"
+
+  become: true
+  gather_facts: false
+
+  vars:
+    my_groups:
+      - devops
+      - sysadmins
+
+    my_users:
+      natasha:
+        groups:
+          - wheel
+          - devops
+
+  tasks:
+    - name: Conditionals tasks
+      ansible.builtin.debug:
+        msg: >-
+          Hostname: {{ inventory_hostname }}, Host: {{ ansible_host }}
+
+
+...

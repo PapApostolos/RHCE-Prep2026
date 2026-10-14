@@ -1,0 +1,30 @@
+# playbooks/ping/lookup.yml
+---
+# Lookup Test
+
+- name: Lookup Playbook
+  hosts: "{{ ans_hosts | default('rhel-server1,rhel-server2') }}"
+  gather_facts: false
+
+  vars:
+    ans_env_vars:
+      - HOME
+      - PATH
+      - HOSTNAME
+
+  tasks:
+
+    - name: Display Env Variables
+      loop:
+        "{{ ans_env_vars }}"
+      ansible.builtin.debug:
+        msg: >-
+          Env-var: '{{ item }}' has value: '{{ lookup('ansible.builtin.env', item) }}'
+
+    - name: Display local file
+      ansible.builtin.debug:
+        msg: |
+          playbook_dir: '{{ playbook_dir }}'
+          Linux Command: '{{ lookup('pipe', 'whoami') }}'
+          {{ lookup('ansible.builtin.file', '../../ansible.cfg') }}
+...
