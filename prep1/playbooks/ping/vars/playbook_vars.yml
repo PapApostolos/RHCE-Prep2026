@@ -1,0 +1,18 @@
+# These vars are going to be inserted in the playbook
+---
+ans_groups:
+  - devops
+  - sysadmins
+
+ans_users:
+  natasha:
+      groups:
+        - wheel
+        - sysadmins
+      password: "natasha"
+
+    guest:
+      groups: devops
+      password: guest
+...
+

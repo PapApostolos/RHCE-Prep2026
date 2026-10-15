@@ -10,7 +10,6 @@
       name: "httpd"
       version: "2.4.63"
 
-
   tasks:
 
     - name: Block for Service Related tasks
@@ -24,11 +23,6 @@
           ansible.builtin.command: "{{ ans_service.name }} -version"
 
       rescue:
-
-        - debug:
-            msg: |
-              ans_service_version_old
-              ans_service_version_old
 
         - name: Ensure Message is displaybd about current tasks
           ansible.builtin.debug:

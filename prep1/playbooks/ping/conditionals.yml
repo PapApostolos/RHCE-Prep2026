@@ -8,11 +8,9 @@
 
   vars:
     ans_groups:
-      - devops
       - sysadmins
 
     ans_users:
-      - guest
       - natasha
       - sysadmin1
 
@@ -31,8 +29,9 @@
     - name: Ensure user exist
       loop: "{{ ans_users }}"
       ansible.builtin.user:
-        name: "{{ item }}"
         state: present
+        name: "{{ item }}"
+        update_password: on_create
         password: "{{ ans_password | default('redhat') | password_hash('sha512') }}"
 
 ...

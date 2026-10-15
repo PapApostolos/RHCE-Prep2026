@@ -1,0 +1,17 @@
+# This is a dictionary example
+---
+- name: Playbook with Dictionary Loops
+  hosts: RHEL-SERVERS
+
+  become: true
+  gather_facts: false
+
+  vars_files:
+    - ./vars/playbook_vars.yml
+
+  tasks:
+    - name: Ensure user existance on the remote servers
+      loop:
+      ansible.builtin.user:
+        name:
+...
