@@ -1,7 +1,8 @@
 ---
 - name: "Ping Inventory Hosts"
-  hosts: "{{ my_host | default('MIRROR-SERVERS') }}"
+  hosts: "{{ my_host | default('RHEL_SERVERS') }}"
   gather_facts: false
+  order: reverse_sorted
 
   vars:
     user_state: "present"
@@ -9,7 +10,7 @@
   tasks:
     - name: Ping Remote Hosts
       ansible.builtin.debug:
-        msg: "Ping {{ inventory_hostname }}"
+        msg: "Ping '{{ inventory_hostname }}' at '{{ ansible_host }}' address"
 
     - name: Display Hosts
       ansible.builtin.ping:

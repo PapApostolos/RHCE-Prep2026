@@ -16,8 +16,12 @@
       - natasha
       - sysadmin1
 
-
   tasks:
+    - name: Display Groups
+      loop: "{{ ans_groups }}"
+      ansible.builtin.debug:
+        msg: "Group {{ item }}"
+
     - name: Ensure desired group exists
       loop: "{{ ans_groups }}"
       ansible.builtin.group:
@@ -29,6 +33,6 @@
       ansible.builtin.user:
         name: "{{ item }}"
         state: present
-        password: "{{ ans_password | default('redhat') | password_hash('512') }}"
+        password: "{{ ans_password | default('redhat') | password_hash('sha512') }}"
 
 ...
