@@ -1,12 +1,23 @@
-[RHEL_SERVERS]
+[RHEL_SERVERS_LOCAL]
 rhel-server1 ansible_host=192.168.122.63
 rhel-server2 ansible_host=192.168.122.246
 rhel-server3 ansible_host=192.168.122.225
 
+[RHEL_SERVERS_WORK]
+rhel-server_home_1 ansible_host=192.168.2.7
+rhel-server_home_2 ansible_host=192.168.2.3
+
+[RHEL_SERVERS_IBM]
+rhel-server_work_1 ansible_host=172.20.10.7
+rhel-server_work_2 ansible_host=172.20.10.10
+
+[RHEL_SERVERS:children]
+RHEL_SERVERS_IBM
+RHEL_SERVERS_HOME
+RHEL_SERVERS_LOCAL
+
 [RHEL_SERVERS:vars]
 ansible_user=ans_user
-ansible_password=qweasd
 ansible_become=true
 ansible_become_method=sudo
 ansible_become_user=root
-ansible_become_password=qweasd
