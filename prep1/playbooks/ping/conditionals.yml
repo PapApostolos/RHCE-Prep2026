@@ -30,8 +30,9 @@
       loop: "{{ ans_users }}"
       ansible.builtin.user:
         state: present
-        name: "{{ item }}"
-        update_password: on_create
+        # update_password: on_create
+        name: "{{ item['name'] }}"
+        groups: "{{ item['groups'] }}"
         password: "{{ ans_password | default('redhat') | password_hash('sha512') }}"
 
 ...

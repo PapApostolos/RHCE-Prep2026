@@ -10,8 +10,17 @@
     - ./vars/playbook_vars.yml
 
   tasks:
-    - name: Ensure user existance on the remote servers
-      loop:
+
+    - name: Ensure group existance of remote hosts
+      loop: "{{ ans_groups }}"
+      ansible.builtin.group:
+        name: "{{ item }}"
+
+    - name: Ensure Users have the proper groups
+      loop: "{{ ans_users }}"
       ansible.builtin.user:
-        name:
+        name: "{{ item['name'] }}"
+        groups: "{{ item['groups'] }}"
+        password: "{{ item['password'] | default('redhat') | password_hash('sha512')  }}"
+
 ...

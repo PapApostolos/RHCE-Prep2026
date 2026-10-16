@@ -5,14 +5,13 @@ ans_groups:
   - sysadmins
 
 ans_users:
-  natasha:
-      groups:
-        - wheel
-        - sysadmins
-      password: "natasha"
+  - name: natasha
+    groups:
+      - wheel
+      - sysadmins
+    password: "natasha"
 
-    guest:
-      groups: devops
-      password: guest
+  - name: guest
+    groups: devops
+    password: guest
 ...
-
