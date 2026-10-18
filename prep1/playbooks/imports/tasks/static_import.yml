@@ -1,0 +1,11 @@
+# Static import
+---
+- name: Command Example
+  changed_when: false
+  register: command_output
+  ansible.builtin.command: cat /etc/hostname
+
+- name: Dispaly Result
+  ansible.builtin.debug:
+    msg: "{{ command_output.stdout }}"
+...

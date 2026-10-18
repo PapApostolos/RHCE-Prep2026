@@ -1,0 +1,35 @@
+# Import tasks statically and dynamically.
+---
+- name: Insert ansible tasks
+  hosts: "{{ ans_hosts | default('RHEL-SERVERS') }}"
+
+  gather_facts: false
+
+  vars:
+    ans_import_type: "static"
+
+  tasks:
+    - name: Import tasks statically
+      when: ans_import_method | upper in "STATICLLY"
+      block:
+        - name: DISPLAY IMPORT METHOD:'{{ ans_import_method }}'
+          ansible.builtin.debug:
+            msg: "STATIC IMPORT"
+
+        - name: IMPORT TASKS
+          ansible.builtin.import_tasks:
+            file: tasks/static_import.yml
+
+
+    - name: IMPORT TASKS DYNAMICALLY
+      when: ans_import_method | upper in "DYNAMICLLY"
+      block:
+        - name: DISPLAY DYNAMIC IMPORT
+          ansible.builtin.debug:
+            msg: "DYNAMIC INCLUDE"
+
+        - name: INCLUDE TASKS
+          ansible.builtin.include_tasks:
+            file: tasks/dynamic_include.yml
+
+...

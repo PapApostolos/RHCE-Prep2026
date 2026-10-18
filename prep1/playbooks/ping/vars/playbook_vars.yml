@@ -5,6 +5,10 @@ ans_groups:
   - sysadmins
 
 ans_users:
+  - natasha
+  - sysadmin1
+
+ans_users_info:
   - name: natasha
     groups:
       - wheel
