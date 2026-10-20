@@ -1,0 +1,28 @@
+# playbooks/ping/commnd_loop.yml
+---
+- name: Playbook for Command iteration
+  hosts: "{{ ans_hosts | default('RHEL-SERVERS') }}"
+
+  gather_facts: false
+
+  tasks:
+    - name: Apply commands to remote servers
+      register: command_results
+      loop:
+        - "/etc/hostname"
+        - "/etc/resolv.conf"
+      ansible.builtin.command:
+        cmd: cat {{ item }}
+
+    - name: Display returned results
+      when: false
+      ansible.builtin.debug:
+        msg: "{{ command_results }}"
+
+    - name: Display returned results
+      loop: "{{ command_results['results'] }}"
+      loop_control:
+        label: "{{ item['cmd'] }}"
+      ansible.builtin.debug:
+        msg: "{{ item['stdout_lines'] }}"
+...

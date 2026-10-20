@@ -1,0 +1,50 @@
+# playbooks/ping/conditionals.yml
+---
+- name: Conditionals and Loops
+  hosts: "{{ ans_hosts | default('RHEL-SERVERS') }}"
+
+  become: true
+  gather_facts: false
+
+  vars:
+    ans_groups:
+      - sysadmins
+
+    ans_users:
+      - natasha
+      - sysadmin1
+
+  vars_files:
+    - ./vars/playbook_vars.yml
+
+  tasks:
+
+    - name: Ensure desired group exists
+      loop: "{{ ans_groups }}"
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: present
+
+    - name: Ensure user exist
+      loop: "{{ ans_users_info }}"
+      register: user_creation_results
+      ansible.builtin.user:
+        state: present
+        # update_password: on_create
+        name: "{{ item['name'] }}"
+        groups: "{{ item['groups'] }}"
+        password: "{{ ans_password | default('redhat') | password_hash('sha512') }}"
+
+    # - name: Display User-Creation-Results
+    #   ansible.builtin.debug:
+    #     var: user_creation_results
+
+    - name: Display User-Creation-Results
+      loop: "{{ user_creation_results['results'] }}"
+      loop_control:
+        label: "{{ item['item']['name'] }}"
+      ansible.builtin.debug:
+        msg:
+          - "Failed: {{ item['failed'] }} | Changed: {{ item['changed'] }}"
+          - "{{ item['item'] }}"
+...

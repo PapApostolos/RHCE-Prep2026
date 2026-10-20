@@ -1,38 +1,12 @@
 # playbooks/ping/conditionals.yml
 ---
-- name: Conditionals and Loops
+- name: Run Conditionals
   hosts: "{{ ans_hosts | default('RHEL-SERVERS') }}"
 
-  become: true
   gather_facts: false
 
-  vars:
-    ans_groups:
-      - sysadmins
-
-    ans_users:
-      - natasha
-      - sysadmin1
-
   tasks:
-    - name: Display Groups
-      loop: "{{ ans_groups }}"
-      ansible.builtin.debug:
-        msg: "Group {{ item }}"
 
-    - name: Ensure desired group exists
-      loop: "{{ ans_groups }}"
-      ansible.builtin.group:
-        name: "{{ item }}"
-        state: present
-
-    - name: Ensure user exist
-      loop: "{{ ans_users }}"
-      ansible.builtin.user:
-        state: present
-        # update_password: on_create
-        name: "{{ item['name'] }}"
-        groups: "{{ item['groups'] }}"
-        password: "{{ ans_password | default('redhat') | password_hash('sha512') }}"
+  - name: Execute tasks based on condtitionals
 
 ...
