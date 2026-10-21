@@ -1,0 +1,24 @@
+# playbooks/task_control/handlres.yml
+---
+- name: Activate Handlres
+  hosts: "{{ ans_hosts | default('RHEL-SERVERS') }}"
+
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Ensure httpd content updates
+      notify: Restart httpd
+      ansible.builtin.lineinfile:
+        regexp: "^HTTPD Service of"
+        path: /var/www/html/index.html
+        state: present
+        line: >
+          HTTPD Service of '{{ ansible_facts['hostname'] }}'!
+
+  handlers:
+    - name: Restart httpd
+      ansible.builtin.systemd_service:
+        name: httpd.service
+        state: started
+...
