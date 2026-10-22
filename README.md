@@ -8,7 +8,7 @@
 * ansible-config --type=keyword --list
 * ansible-config --type=keyword loop/vars/become
 
-### VAULT
+### Secrets/Vault
 * ansible-vault
 * ansible-vault encrypt_string --name pswdStuD3nt123
 * ansible-vault encrypt secret1.yml secret2.yml --output=output-file
@@ -16,7 +16,7 @@
 
 ---
 
-### Run
+### Ansible Run
 * ansible-navigator
 * ansible-navigator -m stdout
 * ansible-navigator -m stdout --check
