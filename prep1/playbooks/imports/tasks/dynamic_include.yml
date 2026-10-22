@@ -4,7 +4,10 @@
   changed_when: false
   register: shell_output
   ansible.builtin.shell:
-    cmd: cat /etc/resolv.conf | grep nameserver
+    executable: /bin/bash
+    cmd: |
+      set -o pipefail && false
+      cat /etc/resolv.conf | grep nameserver
 
 - name: Dispaly Result
   ansible.builtin.debug:
