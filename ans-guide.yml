@@ -1,0 +1,26 @@
+#
+---
+- devEndevContainerv: - Add-Software:
+- Command: postCreateCommand # Example: "postCreateCommand": "apt-get update && apt-get install -y tmux"
+
+- Containers:
+  - Build:
+    - Command: podman bulild -t my-ee:v1 -f execution-environment.yml
+    - Command: ansible-builder build -t my-ee:v1 -f execution-environment.yml
+ - Run:
+  - Command: podman run --rm con-image-name command
+    Example: podman run --rm \ registry.redhat.io/ansible-automation-platform-27/ee-supported-rhel9:latest \ ansible-galaxy collection list
+
+ - Bash:
+  - Command: podman run --rm -it img-name bash
+    Example: podman run --rm -it \ registry.redhat.io/ansible-automation-platform-27/ee-supported-rhel9:latest \ bash
+ - Push:
+  - Quay.io-Registry:
+  - Command: podman push
+    Example: podman push my-ee:v1 quay.io/my-org/my-ee:latest
+
+- Ansible:
+  - Run:
+    Command: ansible-navigator run playbook.yml --eei my-ee:v1
+
+...
