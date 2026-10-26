@@ -1,0 +1,18 @@
+# guidebook.yml
+---
+
+config:
+  - ansible-config --dump
+
+callbacks:
+  - ansible.posix.timer
+  - ansible.posix.profile_roles
+  - ansible.posix.profile_tasks
+
+vault:
+    vault_password_file=/path/to/file/
+
+other:
+  - deprecation_warnings=false
+
+...
