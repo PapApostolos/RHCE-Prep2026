@@ -1,0 +1,19 @@
+# ansible-navigator.yml
+---
+ansible-navigator:
+
+  mode: stdout
+
+  execution-environment:
+    enabled: true
+    container-engine: podman
+    image: registry.redhat.io/ansible-automation-platform-27/ee-supported-rhel9
+    pull:
+      policy: missing
+      arguments:
+        - "--tsl-verify=false"
+
+  playbook-artifact:
+    enable: false
+...
+

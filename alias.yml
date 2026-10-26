@@ -1,0 +1,10 @@
+---
+cd prep2
+
+alias ad="ansible-doc"
+alias ac="ansible-config"
+alias ai="ansible-inventory"
+alias an="ansible-navigator"
+alias anm="ansible-navigator -m stdout"
+...
+

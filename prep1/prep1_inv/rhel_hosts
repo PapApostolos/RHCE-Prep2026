@@ -1,20 +1,20 @@
-[RHEL-SERVERS-LOCAL]
-rhel-server-local1 ansible_host=192.168.122.63
-rhel-server-local2 ansible_host=192.168.122.246
-rhel-server-local3 ansible_host=192.168.122.225
+[LOCAL-SERVERS]
+rhel-server-local1 ansible_host=192.168.122.190
+rhel-server-local2 ansible_host=192.168.122.195
+debian-server-local1 ansible_host=192.168.122.225
 
-[RHEL-SERVERS-WORK]
+[WORK-SERVERS]
 rhel-server-work1 ansible_host=192.168.2.7
 rhel-server-work2 ansible_host=192.168.2.3
 
-[RHEL-SERVERS-IBM]
+[IBM-SERVERS]
 rhel-server-ibm1 ansible_host=172.20.10.8
 rhel-server-ibm2 ansible_host=172.20.10.10
 
 [RHEL-SERVERS:children]
-RHEL-SERVERS-IBM
-RHEL-SERVERS-WORK
-RHEL-SERVERS-LOCAL
+IBM-SERVERS
+WORK-SERVERS
+LOCAL-SERVERS
 
 [RHEL-SERVERS:vars]
 ansible_user=ans_user

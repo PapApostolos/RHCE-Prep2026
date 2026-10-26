@@ -1,0 +1,14 @@
+# playbooks/system/ping.yml
+---
+- name: Ping remote server
+  hosts: "{{ ans_hosts | default('RHEL_SERVERS') }}"
+
+  gather_facts: false
+
+  tasks:
+    
+    - name: Ping hosts
+      ansible.builtin.ping:
+
+...
+
