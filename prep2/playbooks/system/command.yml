@@ -1,0 +1,25 @@
+# playbooks/system/command.yml
+---
+- name: Command Module Examples
+  hosts: "{{ ans_hosts | default('LOCAL_SERVERS') }}"
+
+  gather_facts: false
+
+  vars:
+    ans_command: "whoami"
+
+  tasks:
+    - name: Execute command remotely
+      register: ans_command_result
+      ansible.builtin.command:
+        cmd: "{{ ans_command }}"
+
+    - name: Display command result
+      ansible.builtin.debug:
+        var: ans_command_result['stdout_lines']
+
+    - name: Display command result
+      ansible.builtin.debug:
+        var: ans_command_result
+
+...

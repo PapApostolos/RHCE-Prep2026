@@ -1,0 +1,20 @@
+# ./playbooks/services/start_status.yml
+---
+- name: Start Service
+  hosts: LOCAL_SERVERS
+
+  gather_facts: false
+
+  vars:
+    ans_service: firewalld.service
+
+  tasks:
+
+  - name: PRE-FLIGHT | GATHER SERVICE INFORMATION
+    ansible.builtin.service_facts:
+
+  - name: MAIN | DISPLAY STATUS FOR SERVICE 'ans_service'
+    ansible.builtin.debug:
+      var: ansible_facts['services'][ans_service]
+
+...

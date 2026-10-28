@@ -4,6 +4,7 @@ Notes and comments for RHCE exam.
 Contents:
 - [VSCode IDE](#vscode-ide)
 - [Git](#git)
+- [Add-Hoc Commands](#add-hoc-commands)
 - [Ansible-Config](#ansible-config)
 - [Ansible-Navigator](#ansible-navigator)
 - [Inventory](#inventory)
@@ -87,6 +88,14 @@ become_user=root
 become_method=sudo
 become_ask_pass=false
 ```
+
+## Add Hoc Commands
+
+Simple terminal commands that can be used during linux
+
+- ansible LOCAL_SERVERS -m service_facts | less -I
+- ansible LOCAL_SERVERS -m systemd_service -a "name=firewalld" --check | less -I
+
 
 ## Ansible-Navigator
 

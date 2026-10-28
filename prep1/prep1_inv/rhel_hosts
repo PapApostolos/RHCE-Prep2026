@@ -1,7 +1,7 @@
 [LOCAL-SERVERS]
+# debian-server-local1 ansible_host=192.168.122.225
 rhel-server-local1 ansible_host=192.168.122.190
 rhel-server-local2 ansible_host=192.168.122.195
-debian-server-local1 ansible_host=192.168.122.225
 
 [WORK-SERVERS]
 rhel-server-work1 ansible_host=192.168.2.7
