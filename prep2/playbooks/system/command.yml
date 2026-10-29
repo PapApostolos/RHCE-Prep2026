@@ -6,20 +6,25 @@
   gather_facts: false
 
   vars:
-    ans_command: "whoami"
+    ans_command: "cat /etc/hosts"
+    ans_shell: "whoami; hostname; ip -br a s"
 
   tasks:
-    - name: Execute command remotely
+    - name: Execute 'command' remotely
       register: ans_command_result
       ansible.builtin.command:
         cmd: "{{ ans_command }}"
 
-    - name: Display command result
-      ansible.builtin.debug:
-        var: ans_command_result['stdout_lines']
+    - name: Execute 'shell' command remotely
+      register: ans_shell_result
+      ansible.builtin.shell:
+        cmd: "{{ ans_shell }}"
 
     - name: Display command result
       ansible.builtin.debug:
-        var: ans_command_result
+        msg: "{{ ans_command_result['stdout_lines'] }}"
 
+    - name: Display Shell result
+      ansible.builtin.debug:
+        msg: "{{ ans_shell_result['stdout_lines'] }}"
 ...
