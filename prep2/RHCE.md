@@ -99,6 +99,8 @@ Simple terminal commands that can be used during linux
 
 ## Ansible-Navigator
 
+
+Execution-Environment
 ```
 podman login registry.redhat.io
 registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9
@@ -106,9 +108,28 @@ registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9
 ansible-navigator images \
 --eei registry.redhat.io/ansible-automation-platform-27/ee-supported-rhel9 \
 --pp missing --tls-verify=false --pae false --mode stdout
-
-
 ```
+
+**Debug Process:**
+	* anm run play.yml --list-tasks
+	* anm run play.yml --start-at-task "taskName"
+	* anm run play.yml --step # step-by-step execution
+
+
+**Logs**
+```
+$ANSIBLE_LOG_PATH
+ansible.cfg
+[defaults]
+log_path=/path/to/file
+
+ansible-navigator.yml
+ansible-navigator:
+	playbook-artifacts:
+		enaible: false
+```
+*Commands (alias anm='ansible-navigator -m stdout')*
+
 
 ## Ansible-Inventory
 
