@@ -7,7 +7,13 @@ Contents:
 - [Add-Hoc Commands](#add-hoc-commands)
 - [Ansible-Config](#ansible-config)
 - [Ansible-Navigator](#ansible-navigator)
-- [Inventory](#inventory)
+- [Variables](#variables)
+- [Ansible Inventory](#ansible-inventory)
+- [Task Control](#task-control)
+- [Deploy Files](#deploy-files)
+- [Content at Scale](#content-at-scale)
+- [Roles and Collections](#roles-and-collections)
+- [Administration Tasks](#administration-tasks)
 
 
 ## VSCode IDE
@@ -65,6 +71,18 @@ Other Extentions:
 - `git config --global user.name 'Peter Shadowman'
 - `git config --global user.email peter@host.example.com`
 
+***Git-Diff***:
+- git diff
+- git diff HEAD
+- git diff --staged
+- git diff c5deeae 82733c3
+
+
+***Git-Tags***:
+- git tag ______________________# Displays all tags
+- git tag -l "v1*" ____________# List all tags with a specific pattern
+- git tag -a v1.1 -m "my v1.1" # Creates a new annotated tag
+
 
 
 ## Ansible-Config
@@ -92,6 +110,9 @@ become_ask_pass=false
 ## Add Hoc Commands
 
 Simple terminal commands that can be used during linux
+```
+ansible host-pattern -m module [-a 'module arguments] [-i inventory]
+```
 
 - ansible LOCAL_SERVERS -m service_facts | less -I
 - ansible LOCAL_SERVERS -m systemd_service -a "name=firewalld" --check | less -I
@@ -138,8 +159,15 @@ ansible-navigator:
 - inventory
 	- group_vars
 	- hosts_vars
-### Git
 
+## Ansible Inventory
 
+## Task Control
 
-### Git
+## Deploy Files
+
+## Content at Scale
+
+## Roles and Collections
+
+## Administration Tasks
