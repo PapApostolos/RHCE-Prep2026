@@ -1,0 +1,23 @@
+---
+- name: Mange dnf operatiosn remotely
+  hosts: "{{ ans_hosts | default('RHEL_SERVERS') }}"
+
+  become: false
+  gather_facts: false
+  remote_user: ans_user
+
+  vars:
+    ans_pkg:
+      name: "httpd"
+      state: "present"
+
+  tasks:
+    - name: "Execute dnf operation on {{ inventory_hostname }}"
+      become: true
+      become_user: root
+      ansible.builtin.dnf:
+        name: "{{ ans_pkg['name'] }}"
+        state: "{{ ans_pkg['state'] }}"
+
+...
+
