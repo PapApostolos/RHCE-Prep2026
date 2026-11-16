@@ -1,0 +1,27 @@
+---
+- name: "Variable Playbook: Example-1"
+  hosts: LOCAL_SERVERS
+
+  gather_facts: false
+
+  vars:
+    ans_service: "httpd"
+    ans_state: present
+
+  tasks:
+    - name: Install dnf package
+      become: true
+      register: ans_pkg_result
+      ansible.builtin.dnf:
+        name: "{{ ans_service }}"
+        state: "{{ ans_state }}"
+
+
+    - name: Display Installation result
+      ansible.builtin.debug:
+        msg: |
+          Pkg-rc: {{ ans_pkg_result['rc'] }}
+          Pkg-output: {{ ans_pkg_result['results'] }}
+
+...
+
