@@ -1,2 +1,4 @@
 *.log*
 *secrets*
+*SECRETS*
+.vscode

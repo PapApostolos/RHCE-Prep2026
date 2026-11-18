@@ -1,0 +1,17 @@
+---
+- name: Playbook for Magic variables
+  hosts: "{{ ans_hosts | default('LOCAL_SERVERS') }}"
+  
+  gather_facts: false
+
+  tasks:
+    
+    - name: Debug task
+      ansible.builtin.debug:
+        var: groups  
+
+    - name: Debug task
+      ansible.builtin.debug:
+        var: group_names 
+...
+

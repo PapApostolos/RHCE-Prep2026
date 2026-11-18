@@ -19,16 +19,15 @@
     - name: Ensure inventory file exist for inventory-'{{ inventory_hostname }}'
       delegate_to: localhost
       ansible.builtin.file:
-        state: touch
-        path: "{{ ans_facts_path }}/inventory_hostname"
+        state: directory
+        path: "{{ ans_facts_path }}/{{ inventory_hostname }}"
         mode: '0644'
 
     - name: Store host facts in '{{ ans_facts_path }}'
       delegate_to: localhost
       ansible.builtin.copy:
-        dest: "{{ ans_facts_path }}/inventory_hostname"
+        dest: "{{ ans_facts_path }}/{{ inventory_hostname }}/facts.json"
         content: "{{ ansible_facts | to_nice_json }}"
         mode: '0644'
-
 
 ...
