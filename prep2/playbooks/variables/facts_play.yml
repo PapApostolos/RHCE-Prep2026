@@ -1,0 +1,12 @@
+---
+- name: Ansible Facts Gathering
+  hosts: "{{ ans_hosts | default('LOCAL_SERVERS') }}"
+
+  gather_facts: true
+
+  tasks:
+    - name: Display Basic facts
+      ansible.builtin.debug:
+        var: ansible_facts
+
+...
