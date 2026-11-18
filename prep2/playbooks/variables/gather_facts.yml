@@ -1,0 +1,34 @@
+---
+- name: Gather facts from remote host and save them
+  hosts: "{{ ans_hosts | default('FALLBACK_SERVERS') }}"
+
+  gather_facts: true
+
+  vars:
+    ans_facts_path: "/tmp/ans_facts"
+
+  tasks:
+
+    - name: Ensure the directory exist at {{ ans_facts_path }}
+      delegate_to: localhost
+      ansible.builtin.file:
+        state: directory
+        path: "{{ ans_facts_path }}"
+        mode: "0755"
+
+    - name: Ensure inventory file exist for inventory-'{{ inventory_hostname }}'
+      delegate_to: localhost
+      ansible.builtin.file:
+        state: touch
+        path: "{{ ans_facts_path }}/inventory_hostname"
+        mode: '0644'
+
+    - name: Store host facts in '{{ ans_facts_path }}'
+      delegate_to: localhost
+      ansible.builtin.copy:
+        dest: "{{ ans_facts_path }}/inventory_hostname"
+        content: "{{ ansible_facts | to_nice_json }}"
+        mode: '0644'
+
+
+...
