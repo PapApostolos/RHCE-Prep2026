@@ -1,0 +1,34 @@
+---
+- name: Register loop
+  hosts: "{{ ans_hosts | default('LOCAL_SERVERS') }}"
+  
+  gather_facts: false
+
+  vars:
+    ans_commands:
+      - "whoami"
+      - "ip -br a s"
+    
+  tasks:
+    - name: Execute shell command
+      register: ans_shell_result
+      loop: "{{ ans_commands }}"
+      ansible.builtin.shell:
+        cmd: "{{ item }}" 
+
+    - name: Display all registered output
+      ansible.builtin.debug:
+        var: ans_commands
+          
+    - name: Display registered output
+      loop: "{{ ans_shell_result['results'] }}"
+      loop_control:
+        label: "{{ item['cmd'] }}"
+      ansible.builtin.debug:
+        msg: |
+          command: {{ item['cmd'] }}
+          result: {{ item['stdout_lines'] }}
+
+
+...
+
