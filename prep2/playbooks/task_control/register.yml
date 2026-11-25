@@ -1,25 +1,36 @@
 ---
 - name: Register loop
   hosts: "{{ ans_hosts | default('LOCAL_SERVERS') }}"
-  
+
   gather_facts: false
 
   vars:
+    ans_debug_mode: true
+    ans_service: firewalld.service
+
     ans_commands:
       - "whoami"
       - "ip -br a s"
-    
+      - "systemctl is-active {{ ans_service }}"
   tasks:
     - name: Execute shell command
       register: ans_shell_result
       loop: "{{ ans_commands }}"
       ansible.builtin.shell:
-        cmd: "{{ item }}" 
+        cmd: "{{ item }}"
 
     - name: Display all registered output
+      run_once: true
+      when: ans_debug_mode | bool
       ansible.builtin.debug:
         var: ans_commands
-          
+
+    - name: Display all registered output
+      run_once: true
+      when: ans_debug_mode | bool
+      ansible.builtin.debug:
+        var: ans_shell_result
+
     - name: Display registered output
       loop: "{{ ans_shell_result['results'] }}"
       loop_control:
@@ -27,8 +38,7 @@
       ansible.builtin.debug:
         msg: |
           command: {{ item['cmd'] }}
-          result: {{ item['stdout_lines'] }}
+          result: {{ item['stdout_lines'] | to_nice_yaml }}
 
 
 ...
-
