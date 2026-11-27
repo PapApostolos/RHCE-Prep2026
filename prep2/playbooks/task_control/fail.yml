@@ -1,0 +1,26 @@
+---
+- name: Handle task failure
+  hosts: "{{ ans_hosts | default('IBM_SERVERS') }}"
+
+  gather_facts: false
+
+  vars:
+    ans_services:
+      - nginx
+      - httpd
+
+  tasks:
+    - name: Manage System Services '{{ ans_services }}'
+      ignore_errors: true
+      register: ans_services_result
+      loop: '{{ ans_services }}'
+      ansible.builtin.systemd_service:
+        name: '{{ item }}'
+        state: '{{ ans_services_state }}'
+        
+
+    - name: Display Services Results
+      loop: "{{ ans_services_result['results'] }}"
+      ansible.builtin.debug:
+        var: item
+
