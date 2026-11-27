@@ -1,0 +1,24 @@
+---
+- name: Notify Handlers
+  hosts: "{{ ans_hosts | default('LOCAL_SERVERS') }}"
+  
+  become: false
+  gather_facts: false
+
+  vars:
+    ans_state: "present"
+
+  tasks:
+    - name: Copy configuration template
+      notify: Restart Server
+      ansible.builtin.template:
+        src: ./templates/demo.j2
+        dest: /home/{{ ansible_user }}
+        mode: "0600"
+  
+  handlers:        
+    - name: Restart Server
+      ansible.builtin.debug:
+        msg: "SUCCESSFULL TRANSFER for '{{ ansible_user }}'!"
+...
+

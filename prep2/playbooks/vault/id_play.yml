@@ -1,0 +1,21 @@
+---
+- name: Ansible vault playbook
+  hosts: "{{ ans_hosts | default('LOCAL_SERVERS')}}"
+
+  gather_facts: false
+
+  vars_files:
+    - ./prod_vault.yml
+    - ./dev_vault.yml
+    - ./simple_vault.yml
+
+  tasks:
+    - name: Display Encrytped Variables
+      ansible.builtin.debug:
+        msg: |
+          The ecrypted values are
+          - DEVELOPMENT: {{ vault_dev_id }}
+          - PRODUCTION: {{ vault_prd_id }},
+          - SIMPLE: {{ vault_id }}
+...
+
